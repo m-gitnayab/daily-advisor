@@ -134,9 +134,7 @@ function App() {
                 : remaining <= 0
                   ? "Daily limit reached"
                   : "Give me perspective"}
-              {!isLoading && (
-                <Icon name={remaining <= 0 ? "sad" : "arrow"} />
-              )}
+              {!isLoading && <Icon name={remaining <= 0 ? "sad" : "arrow"} />}
             </button>
             <div className="meta">
               <Message remaining={remaining} />
