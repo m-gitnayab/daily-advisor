@@ -135,7 +135,7 @@ function App() {
                   ? "Daily limit reached"
                   : "Give me perspective"}
               {!isLoading && (
-                <Icon name={remaining <= 0 ? "warning" : "arrow"} />
+                <Icon name={remaining <= 0 ? "sad" : "arrow"} />
               )}
             </button>
             <div className="meta">
@@ -214,6 +214,13 @@ function Icon({ name }) {
       <>
         <path d="M4 13.5h3.5V9H4v4.5ZM12.5 13.5H16V9h-3.5v4.5Z" />
         <path d="M4 9c0-2 1.2-3.5 3.5-4M12.5 9c0-2 1.2-3.5 3.5-4" />
+      </>
+    ),
+    sad: (
+      <>
+        <circle cx="10" cy="10" r="7" />
+        <path d="M7 8.5h.01M13 8.5h.01" />
+        <path d="M7 14c.8-1.1 1.8-1.6 3-1.6s2.2.5 3 1.6" />
       </>
     ),
     spark: (
