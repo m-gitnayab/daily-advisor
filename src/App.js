@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import lottie from "lottie-web";
 import "./App.css";
 
 const DAILY_LIMIT = 3;
@@ -100,8 +101,12 @@ function App() {
             </span>
           </div>
 
-          <div className={`adviceBox${advice ? " hasAdvice" : ""}`}>
-            {advice ? (
+          <div
+            className={`adviceBox${advice && remaining > 0 ? " hasAdvice" : ""}`}
+          >
+            {remaining <= 0 ? (
+              <LimitReachedAnimation />
+            ) : advice ? (
               <blockquote className="advice">
                 <span className="quoteMark">“</span>
                 {advice}
@@ -154,6 +159,31 @@ function App() {
         </footer>
       </main>
     </div>
+  );
+}
+
+function LimitReachedAnimation() {
+  const animationRef = useRef(null);
+
+  useEffect(() => {
+    const animation = lottie.loadAnimation({
+      container: animationRef.current,
+      renderer: "svg",
+      loop: true,
+      autoplay: true,
+      path: "/limitReached.json",
+    });
+
+    return () => animation.destroy();
+  }, []);
+
+  return (
+    <div
+      ref={animationRef}
+      className="limitAnimation"
+      role="img"
+      aria-label="Daily advice limit reached"
+    />
   );
 }
 
