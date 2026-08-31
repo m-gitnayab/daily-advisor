@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import lottie from "lottie-web";
 import "./App.css";
 
-const DAILY_LIMIT = 3;
+const DAILY_LIMIT = 4;
 const DAY_MS = 24 * 60 * 60 * 1000;
 
 function App() {
@@ -11,6 +11,9 @@ function App() {
   const [resetTime, setResetTime] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const [shouldShowAnimationOnLoad, setShouldShowAnimationOnLoad] =
+    useState(false);
+  const hasLoadedRef = useRef(false);
 
   useEffect(() => {
     const savedRemaining = localStorage.getItem("remaining");
@@ -20,9 +23,16 @@ function App() {
     if (!savedResetTime || now > savedResetTime || savedRemaining === null) {
       resetDailyLimit();
     } else {
-      setRemaining(Number(savedRemaining));
+      const loaded = Number(savedRemaining);
+      setRemaining(loaded);
       setResetTime(savedResetTime);
+
+      // If loaded remaining is 1 or 0, show animation on load
+      if (loaded <= 1) {
+        setShouldShowAnimationOnLoad(true);
+      }
     }
+    hasLoadedRef.current = true;
   }, []);
 
   function resetDailyLimit() {
@@ -104,7 +114,7 @@ function App() {
           <div
             className={`adviceBox${advice && remaining > 0 ? " hasAdvice" : ""}`}
           >
-            {remaining <= 0 ? (
+            {remaining <= 0 || (shouldShowAnimationOnLoad && remaining <= 1) ? (
               <LimitReachedAnimation />
             ) : advice ? (
               <blockquote className="advice">
@@ -132,21 +142,36 @@ function App() {
             <button
               className="btn"
               onClick={getAdvice}
-              disabled={remaining <= 0 || isLoading}
+              disabled={
+                remaining <= 0 ||
+                (shouldShowAnimationOnLoad && remaining <= 1) ||
+                isLoading
+              }
             >
               {isLoading
                 ? "Finding a thought..."
-                : remaining <= 0
+                : remaining <= 0 ||
+                    (shouldShowAnimationOnLoad && remaining <= 1)
                   ? "Daily limit reached"
                   : "Give me perspective"}
-              {!isLoading && <Icon name={remaining <= 0 ? "sad" : "arrow"} />}
+              {!isLoading && (
+                <Icon
+                  name={
+                    remaining <= 0 ||
+                    (shouldShowAnimationOnLoad && remaining <= 1)
+                      ? "sad"
+                      : "arrow"
+                  }
+                />
+              )}
             </button>
             <div className="meta">
               <Message remaining={remaining} />
             </div>
           </div>
 
-          {remaining <= 0 && (
+          {(remaining <= 0 ||
+            (shouldShowAnimationOnLoad && remaining <= 1)) && (
             <p className="limitNotice">
               <Icon name="warning" /> You've reached today's limit. New thoughts
               arrive at {resetLabel}.
@@ -188,10 +213,13 @@ function LimitReachedAnimation() {
 }
 
 function Message({ remaining }) {
+  const displayCount = Math.max(0, remaining - 1);
   return (
     <p>
-      <span className="counter">{remaining}</span>
-      <span>{remaining === 1 ? " thought" : " thoughts"} remaining today</span>
+      <span className="counter">{displayCount}</span>
+      <span>
+        {displayCount === 1 ? " thought" : " thoughts"} remaining today
+      </span>
     </p>
   );
 }
