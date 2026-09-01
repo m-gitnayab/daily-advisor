@@ -180,7 +180,7 @@ function App() {
         </section>
 
         <footer className="footer">
-          <Icon name="lock" /> Three considered thoughts, every day
+          <Icon name="bulb" /> Three considered thoughts, every day
         </footer>
       </main>
     </div>
