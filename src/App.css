@@ -111,13 +111,14 @@
   max-width: 570px;
   margin: 12px 0 13px;
   font-size: clamp(2.4rem, 6vw, 4.5rem);
-  line-height: 1.23;
+  line-height: 1.04;
   letter-spacing: -.075em;
   font-weight: 800;
   background: linear-gradient(90deg, #c65b35, #df7047, #9a3d0d, #c65b35);
   background-size: 300% 100%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  height: 160px;
   background-clip: text;
   animation: gradientShift 6s ease infinite;
 }
