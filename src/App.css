@@ -111,9 +111,17 @@
   max-width: 570px;
   margin: 12px 0 13px;
   font-size: clamp(2.4rem, 6vw, 4.5rem);
-  line-height: 1.267;
+  line-height: 0.9;
   letter-spacing: -.075em;
   font-weight: 800;
+  background: none;
+  -webkit-background-clip: initial;
+  -webkit-text-fill-color: initial;
+  background-clip: initial;
+  color: #4a3228;
+}
+
+.title span {
   background: linear-gradient(90deg, #c65b35, #df7047, #9a3d0d, #c65b35);
   background-size: 300% 100%;
   -webkit-background-clip: text;
@@ -301,6 +309,7 @@
   width: 17px;
   height: 17px;
   transition: transform 160ms ease;
+  margin-bottom: 2px;
 }
 
 .btn:not(:disabled):hover {

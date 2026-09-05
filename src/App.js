@@ -83,7 +83,7 @@ function App() {
             <span className="brandMark">
               <Icon name="bulb" />
             </span>
-            <span>advisor</span>
+            <span style={{ color: "#4a3228" }}>advisor</span>
           </div>
           <div className="dateLabel">
             <Icon name="calendar" /> Daily practice
@@ -92,7 +92,9 @@ function App() {
 
         <header className="hero">
           <p className="eyebrow">A moment of perspective</p>
-          <h1 className="title">Make room for a better thought.</h1>
+          <h1 className="title">
+            Make room for a <span>better thought.</span>
+          </h1>
           <p className="subtitle">
             A small piece of wisdom, ready when you are.
           </p>
